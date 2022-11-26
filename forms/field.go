@@ -19,6 +19,10 @@ func NewField(
 	}
 }
 
+func (f *Field) SetValue(value string) {
+	f.Value = value
+}
+
 func (f *Field) Validate() ValidationResult {
 	result := make(ValidationResult)
 
