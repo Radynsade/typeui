@@ -1,21 +1,21 @@
 package forms
 
 type Field struct {
-	Name       string
-	Value      string
-	Validators []Validator
+	Name  string
+	Value string
+	Rules []Rule
 }
 
 type ValidationResult map[string]bool
 
 func NewField(
 	name string,
-	validators ...Validator,
+	rules ...Rule,
 ) *Field {
 	return &Field{
-		Name:       name,
-		Value:      "",
-		Validators: validators,
+		Name:  name,
+		Value: "",
+		Rules: rules,
 	}
 }
 
@@ -26,7 +26,7 @@ func (f *Field) SetValue(value string) {
 func (f *Field) Validate() ValidationResult {
 	result := make(ValidationResult)
 
-	for _, validator := range f.Validators {
+	for _, validator := range f.Rules {
 		name, valid := validator(f.Value)
 		result[name] = valid
 	}

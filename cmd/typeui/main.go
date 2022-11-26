@@ -25,8 +25,8 @@ func main() {
 func passwordField() *typeui.BaseInput {
 	field := forms.NewField(
 		"password",
-		forms.Required(),
-		forms.Min(5, true),
+		forms.RuleRequired(),
+		forms.RuleMin(5, true),
 	)
 
 	return typeui.NewBaseInput(
