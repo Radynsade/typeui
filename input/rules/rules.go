@@ -119,3 +119,17 @@ func MinLength(
 		return ruleName, minLength[string](value, min, included)
 	}
 }
+
+func OneOf(values ...string) Rule {
+	const ruleName = "oneOf"
+
+	return func(value string) (string, bool) {
+		for _, v := range values {
+			if v == value {
+				return ruleName, true
+			}
+		}
+
+		return ruleName, false
+	}
+}

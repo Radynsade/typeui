@@ -6,18 +6,21 @@ import (
 	"github.com/Radynsade/typeui/input/rules"
 )
 
-type Text struct {
+type YesNo struct {
 	*rules.Set
 	BaseInput
 }
 
-func NewText(
+func NewYesNo(
 	label string,
 	placeholder string,
 	required bool,
-) *Text {
-	return &Text{
-		Set: rules.NewSet(),
+) *YesNo {
+	rulesSet := rules.NewSet()
+	rulesSet.Add(rules.OneOf("y", "n"))
+
+	return &YesNo{
+		Set: rulesSet,
 		BaseInput: BaseInput{
 			Label:       label,
 			Placeholder: placeholder,
@@ -26,19 +29,23 @@ func NewText(
 	}
 }
 
-func (t *Text) PrintAndRead() string {
-	t.PrintLabel()
+func (yn *YesNo) PrintAndRead() bool {
+	yn.PrintLabel()
 
 	var value string
 
 	for {
-		t.PrintPlaceholder()
+		yn.PrintPlaceholder()
 
 		fmt.Scanln(&value)
-		validationMap, allValid := t.Validate(value)
+		validationMap, allValid := yn.Validate(value)
 
 		if allValid {
-			return value
+			if value == "y" {
+				return true
+			}
+
+			return false
 		}
 
 		for ruleName, valid := range validationMap {
@@ -46,7 +53,7 @@ func (t *Text) PrintAndRead() string {
 				continue
 			}
 
-			t.PrintError(ruleName)
+			yn.PrintError(ruleName)
 		}
 	}
 }

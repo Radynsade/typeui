@@ -2,7 +2,6 @@ package input
 
 import (
 	"github.com/Radynsade/typeui"
-	"github.com/Radynsade/typeui/input/rules"
 )
 
 type Input[ValueType comparable] interface {
@@ -21,9 +20,6 @@ type BaseInput struct {
 	Placeholder string
 	// Adds '*' to the end of the placeholder if true.
 	Required bool
-	// Validation rules.
-	Rules    []rules.Rule
-	Messages map[string]string
 }
 
 func (bi *BaseInput) PrintLabel() {
@@ -45,23 +41,4 @@ func (bi *BaseInput) PrintPlaceholder() {
 func (bi *BaseInput) Print() {
 	bi.PrintLabel()
 	bi.PrintPlaceholder()
-}
-
-func (bi *BaseInput) PrintError(ruleName string) {
-	if message, ok := bi.Messages[ruleName]; ok {
-		println(" ✗ " + message)
-	} else {
-		println(" ✗ " + ruleName)
-	}
-}
-
-func (bi *BaseInput) AddRule(rule rules.Rule) {
-	bi.Rules = append(bi.Rules, rule)
-}
-
-func (bi *BaseInput) SetMessage(
-	ruleName string,
-	message string,
-) {
-	bi.Messages[ruleName] = message
 }

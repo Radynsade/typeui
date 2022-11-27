@@ -10,6 +10,7 @@ import (
 // Always adds 'IsFloat' rule on validation so you do not need
 // to add it manually. Returns float64 on read.
 type Number struct {
+	*rules.Set
 	BaseInput
 }
 
@@ -18,13 +19,15 @@ func NewNumber(
 	placeholder string,
 	required bool,
 ) *Number {
+	rulesSet := rules.NewSet()
+	rulesSet.Add(rules.IsFloat())
+
 	return &Number{
+		Set: rulesSet,
 		BaseInput: BaseInput{
 			Label:       label,
 			Placeholder: placeholder,
 			Required:    required,
-			Rules:       []rules.Rule{rules.IsFloat()},
-			Messages:    make(map[string]string),
 		},
 	}
 }
@@ -52,7 +55,7 @@ func (n *Number) PrintAndRead() float64 {
 		n.PrintPlaceholder()
 
 		fmt.Scanln(&value)
-		validationMap, allValid := rules.Validate(value, n.Rules)
+		validationMap, allValid := n.Validate(value)
 
 		if allValid {
 			number, _ := strconv.ParseFloat(value, 64)
