@@ -61,7 +61,7 @@ func (n *Number) PrintAndRead() float64 {
 		}
 
 		if !validationMap["isFloat"] {
-			n.printValidationError("isFloat")
+			n.PrintError("isFloat")
 
 			continue
 		}
@@ -71,15 +71,7 @@ func (n *Number) PrintAndRead() float64 {
 				continue
 			}
 
-			n.printValidationError(ruleName)
+			n.PrintError(ruleName)
 		}
-	}
-}
-
-func (n *Number) printValidationError(ruleName string) {
-	if message, ok := n.Messages[ruleName]; ok {
-		println("- " + message)
-	} else {
-		println("- " + ruleName)
 	}
 }

@@ -47,6 +47,18 @@ func (bi *BaseInput) Print() {
 	bi.PrintPlaceholder()
 }
 
+func (bi *BaseInput) PrintError(ruleName string) {
+	if message, ok := bi.Messages[ruleName]; ok {
+		println("✗ " + message)
+	} else {
+		println("✗ " + ruleName)
+	}
+}
+
+func (bi *BaseInput) AddRule(rule rules.Rule) {
+	bi.Rules = append(bi.Rules, rule)
+}
+
 func (bi *BaseInput) SetMessage(
 	ruleName string,
 	message string,

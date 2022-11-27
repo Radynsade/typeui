@@ -47,15 +47,7 @@ func (t *Text) PrintAndRead() string {
 				continue
 			}
 
-			t.printValidationError(ruleName)
+			t.PrintError(ruleName)
 		}
-	}
-}
-
-func (t *Text) printValidationError(ruleName string) {
-	if message, ok := t.Messages[ruleName]; ok {
-		println("- " + message)
-	} else {
-		println("- " + ruleName)
 	}
 }

@@ -52,9 +52,9 @@ func buildEmailInput() *input.Text {
 		"",
 		"Введите ваш email",
 		false,
-		rules.Email(),
 	)
 
+	field.AddRule(rules.Email())
 	field.SetMessage("email", "Неправильная электронная почта.")
 
 	return field
