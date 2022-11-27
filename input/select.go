@@ -14,8 +14,6 @@ func NewSelect[ValueType any](
 	required bool,
 	multiple bool,
 ) *Select[ValueType] {
-	maxItems := 0
-
 	return &Select[ValueType]{
 		BaseInput: BaseInput{
 			Label:       label,
@@ -24,7 +22,7 @@ func NewSelect[ValueType any](
 		},
 		Multiple: multiple,
 		MaxItems: 0,
-		MinItems: 1,
+		MinItems: 0,
 		Items:    make([]*SelectItem[ValueType], 0),
 	}
 }
