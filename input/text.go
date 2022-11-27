@@ -1,6 +1,10 @@
 package input
 
-import "github.com/Radynsade/typeui/input/rules"
+import (
+	"fmt"
+
+	"github.com/Radynsade/typeui/input/rules"
+)
 
 type Text struct {
 	BaseInput
@@ -26,10 +30,12 @@ func NewText(
 func (t *Text) PrintAndRead() string {
 	t.PrintLabel()
 
+	var value string
+
 	for {
 		t.PrintPlaceholder()
 
-		value := readLine()
+		fmt.Scanln(&value)
 		validationMap, allValid := rules.Validate(value, t.Rules)
 
 		if allValid {

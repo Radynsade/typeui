@@ -1,10 +1,14 @@
 package rules
 
 import (
-	"net/mail"
 	"net/url"
 	"reflect"
+	"regexp"
 	"strconv"
+)
+
+var (
+	emailRegexp, _ = regexp.Compile("^(([^<>()[\\]\\.,;:\\s@\"]+(\\.[^<>()[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")
 )
 
 // First return value is the name of the rule, second is result (valid or not).
@@ -30,9 +34,7 @@ func Email() Rule {
 	const ruleName = "email"
 
 	return func(value string) (string, bool) {
-		_, err := mail.ParseAddress(value)
-
-		return ruleName, err == nil
+		return ruleName, emailRegexp.MatchString(value)
 	}
 }
 

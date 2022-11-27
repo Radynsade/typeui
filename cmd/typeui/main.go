@@ -5,6 +5,12 @@ import (
 
 	"github.com/Radynsade/typeui"
 	"github.com/Radynsade/typeui/input"
+	"github.com/Radynsade/typeui/input/rules"
+)
+
+var (
+	ageInput   = buildAgeInput()
+	emailInput = buildEmailInput()
 )
 
 func main() {
@@ -18,13 +24,14 @@ func main() {
 
 	list.Print()
 
-	ageField := ageInput()
-	age := ageField.PrintAndRead()
+	email := emailInput.PrintAndRead()
+	age := ageInput.PrintAndRead()
 
-	fmt.Printf("Ваш возраст: %d", int(age))
+	fmt.Printf("Ваш email: %s\n", email)
+	fmt.Printf("Ваш возраст: %d\n", int(age))
 }
 
-func ageInput() *input.Number {
+func buildAgeInput() *input.Number {
 	field := input.NewNumber(
 		"",
 		"Введите свой возраст",
@@ -36,6 +43,19 @@ func ageInput() *input.Number {
 	field.SetMessage("isFloat", "Невозможно преобразовать в число.")
 	field.SetMessage("maxNumber", "Максимальная продолжительность жизни человека 120 лет.")
 	field.SetMessage("minNumber", "Число меньше нуля.")
+
+	return field
+}
+
+func buildEmailInput() *input.Text {
+	field := input.NewText(
+		"",
+		"Введите ваш email",
+		false,
+		rules.Email(),
+	)
+
+	field.SetMessage("email", "Неправильная электронная почта.")
 
 	return field
 }
