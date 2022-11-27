@@ -56,6 +56,14 @@ func Url() Rule {
 	}
 }
 
+func Regexp(regex *regexp.Regexp) Rule {
+	const ruleName = "regexp"
+
+	return func(value string) (string, bool) {
+		return ruleName, regex.MatchString(value)
+	}
+}
+
 func MaxNumber(
 	max float64,
 	included bool,
