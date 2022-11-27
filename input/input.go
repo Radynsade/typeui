@@ -49,9 +49,9 @@ func (bi *BaseInput) Print() {
 
 func (bi *BaseInput) PrintError(ruleName string) {
 	if message, ok := bi.Messages[ruleName]; ok {
-		println("✗ " + message)
+		println(" ✗ " + message)
 	} else {
-		println("✗ " + ruleName)
+		println(" ✗ " + ruleName)
 	}
 }
 
