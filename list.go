@@ -1,6 +1,8 @@
 package typeui
 
-import "fmt"
+import (
+	"fmt"
+)
 
 const (
 	ListTypeAlphabet = iota

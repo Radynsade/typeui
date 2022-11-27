@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/Radynsade/typeui"
-	"github.com/Radynsade/typeui/forms"
+	"github.com/Radynsade/typeui/input"
 )
 
 func main() {
@@ -16,23 +18,24 @@ func main() {
 
 	list.Print()
 
-	passField := passwordField()
-	passField.PrintAndRead()
+	ageField := ageInput()
+	age := ageField.PrintAndRead()
 
-	println(passField.Field.Value)
+	fmt.Printf("Ваш возраст: %d", int(age))
 }
 
-func passwordField() *typeui.BaseInput {
-	field := forms.NewField(
-		"password",
-		forms.RuleRequired(),
-		forms.RuleMin(5, true),
+func ageInput() *input.Number {
+	field := input.NewNumber(
+		"",
+		"Введите свой возраст",
+		false,
 	)
 
-	return typeui.NewBaseInput(
-		"Пароль",
-		"Введите новый пароль",
-		field,
-		true,
-	)
+	field.SetMax(120, true)
+	field.SetMin(0, true)
+	field.SetMessage("isFloat", "Невозможно преобразовать в число.")
+	field.SetMessage("maxNumber", "Максимальная продолжительность жизни человека 120 лет.")
+	field.SetMessage("minNumber", "Число меньше нуля.")
+
+	return field
 }
